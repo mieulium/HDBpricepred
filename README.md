@@ -80,7 +80,7 @@ Likewise, we also hope to use the prediction to see if the price we are paying f
 |'WOODLANDS'| Dummy | Town variable|
 |'YISHUN'| Dummy | Town variable|
 |'year'| Continuous | Year transacted|
-|'closest_pschool'| Distance in km to the nearest primary school |
+|'closest_pschool'| Continuous| Distance in km to the nearest primary school |
 |'02'| Dummy| Month transacted|
 |'03'| Dummy| Month transacted|
 |'04'| Dummy| Month transacted|
