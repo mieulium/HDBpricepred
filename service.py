@@ -1,51 +1,50 @@
-from flask import Flask, jsonify, request
-from sklearn.linear_model import LogisticRegression
-import pandas as pd
-from flask import render_template
-
+from flask import Flask, request, jsonify
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+@app.route('/getmsg/', methods=['GET'])
+def respond():
+    # Retrieve the name from url parameter
+    name = request.args.get("name", None)
 
-my_data = [
-    {"student": "Anthony", "Speed": 15.25, "Power": "over 9000"},
-    {"student": "Ruairi", "Speed": 28, "Power": "over 9000"},
-    {"student": "Sam", "Speed": 12.58, "Power": "over 9000"},
-    {"student": "Evan", "Speed": 30.23, "Power": "over 9000"},
-]
-df = pd.DataFrame(my_data)
+    # For debugging
+    print(f"got name {name}")
 
-logreg = LogisticRegression()
-model = logreg.fit(df[['Speed']].values, df["student"].values)
+    response = {}
 
-@app.route('/json-test')
-def json_test():
-    return jsonify(my_data)
-
-@app.route('/predict-student')
-def predict_student():
-    speed = request.args.get("speed")
-    if speed:
-        predicted = model.predict([[float(speed)]]).tolist()
-        probabilities = model.predict_proba([[float(speed)]]).tolist()
-        result = {
-            "response": "ok", 
-            "predictions": predicted, 
-            "probabilities": {student: probabilities[0][index] for index, student in enumerate(model.classes_.tolist())}
-        } 
+    # Check if user sent a name at all
+    if not name:
+        response["ERROR"] = "no name found, please send a name."
+    # Check if the user entered a number not a name
+    elif str(name).isdigit():
+        response["ERROR"] = "name can't be numeric."
+    # Now the user entered a valid name
     else:
-        result = {"response": "not found", "message": "Please provide a model parameter to predict!"}
-    return jsonify(result)
+        response["MESSAGE"] = f"Welcome {name} to our awesome platform!!"
 
-@app.route('/predict-student-interface', methods = ["GET", "POST"])
-def predict_student_interface():
+    # Return the response in json format
+    return jsonify(response)
 
-    output = None
+@app.route('/post/', methods=['POST'])
+def post_something():
+    param = request.form.get('name')
+    print(param)
+    # You can add the test cases you made in the previous function, but in our case here you are just testing the POST functionality
+    if param:
+        return jsonify({
+            "Message": f"Welcome {name} to our awesome platform!!",
+            # Add this option to distinct the POST request
+            "METHOD" : "POST"
+        })
+    else:
+        return jsonify({
+            "ERROR": "no name found, please send a name."
+        })
 
-    if request.method == "POST":
-        speed = float(request.form["speed"])
-        output = model.predict([[speed]])[0]
+# A welcome message to test our server
+@app.route('/')
+def index():
+    return "<h1>Welcome to our server !!</h1>"
 
-    return render_template("base.html", output = output)
+if __name__ == '__main__':
+    # Threaded option to enable multiple instances for multiple user access support
+    app.run(threaded=True, port=5000)
