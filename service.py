@@ -26,12 +26,12 @@ def predict():
     addurl1 = "https://developers.onemap.sg/commonapi/search?searchVal="
     addurl2 = "&returnGeom=Y&getAddrDetails=Y&pageNum=1"
 
-    url = (addurl1+address+addurl2)
-    res = requests.get(url)
+    laturl = (addurl1+address+addurl2)
+    latres = requests.get(laturl)
 
-    root = res.json()
-    lat = root['results'][0]['LATITUDE']
-    long = root['results'][0]['LONGITUDE']
+    latroot = latres.json()
+    lat = latroot['results'][0]['LATITUDE']
+    long = latroot['results'][0]['LONGITUDE']
     results = str(lat)+','+str(long)
 
     token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjM1MDQsInVzZXJfaWQiOjM1MDQsImVtYWlsIjoibWlldWxpdW1AZ21haWwuY29tIiwiZm9yZXZlciI6ZmFsc2UsImlzcyI6Imh0dHA6XC9cL29tMi5kZmUub25lbWFwLnNnXC9hcGlcL3YyXC91c2VyXC9zZXNzaW9uIiwiaWF0IjoxNTc4NDQ4NTE0LCJleHAiOjE1Nzg4ODA1MTQsIm5iZiI6MTU3ODQ0ODUxNCwianRpIjoiMDVkY2M4OTFhNDk5OGMyMWY3MzA0MzE1ZDM1ZTIwNmIifQ.PJ_UdoBDDMy0jJjzKjuXfaq3BIoBVs0IQVGl3WW9jYo"
