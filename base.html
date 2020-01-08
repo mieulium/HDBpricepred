@@ -1,0 +1,81 @@
+<html>
+    <head>
+      <title>House Resale Price Prediction</title>
+      <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+    
+    <body>
+    
+      <h1>Make a Resale Price Prediction!</h1>
+      <p>
+      <form id= "prediction" action="/predict" method="POST" enctype="multipart/form-data">
+        <p>
+        <select id="town" name = "town">
+          <option value ="BEDOK"> Bedok </option>
+          <option value = "BISHAN"> Bishan </option>
+          <option value = "BUKIT BATOK"> Bukit Batok </option>
+          <option value = "BUKIT MERAH"> Bukit Merah </option>
+          <option value = "BUKIT PANJANG"> Bukit Panjang </option>
+          <option value = "BUKIT TIMAH"> Bukit Timah </option>
+          <option value = "CENTRAL AREA"> Central </option>
+          <option value = "CHOA CHU KANG"> Choa Chu Kang </option>
+          <option value = "CLEMENTI"> Clementi </option>
+          <option value = "GEYLANG"> Geylang </option>
+          <option value = "HOUGANG"> Hougang </option>
+          <option value = "JURONG EAST"> Jurong East </option>
+          <option value = "JURONG WEST"> Jurong West </option>
+          <option value = "KALLANG/WHAMPOA"> Kallang/Whampoa </option>
+          <option value = "MARINE PARADE"> Marine Parade </option>
+          <option value = "PASIR RIS"> Pasir Ris </option>
+          <option value = "PUNGGOL"> Punggol </option>
+          <option value = "QUEENSTOWN"> Queenstown </option>
+          <option value = "SEMBAWANG"> Sembawang </option>
+          <option value = "SENGKANG"> Sengkang </option>
+          <option value = "SERANGOON"> Serangoon </option>
+          <option value = "TAMPINES"> Tampines </option>
+          <option value = "TOA PAYOH"> Toa Payoh </option>
+          <option value = "WOODLANDS"> Woodlands </option>
+          <option value = "YISHUN"> Yishun </option>
+        </select>
+        </p>
+        <p>
+        <select id="flatkind" name = "flatkind">
+          <option value ="1"> 1 Room  </option>
+          <option value = "2"> 2 Room </option>
+          <option value = "3"> 3 Room </option>
+          <option value = "4"> 4 Room </option>
+          <option value = "5"> 5 Room </option>
+          <option value = "6"> Executive </option>
+          <option value = "7"> Multi-Gen </option>
+        </select>
+        </p>
+        <p>
+        <input type="text" name="floor_area_sqm" placeholder="Area per square meter" required="required" />
+        </p>
+        <p>
+        <input type="text" name="remaining_lease" placeholder="Remaining years left" required="required" />
+        </p>
+        <p>
+        <input type="text" name="address" placeholder="Address" required="required" />
+        </p>
+        <p>
+        <input type="text" name="bathrooms" placeholder="Bathrooms" required="required" />
+        </p>
+        <p>
+        <input type="text" name="bedrooms" placeholder="Bedrooms" required="required" />
+        </p>
+        <p>
+        <input type="text" name="month" placeholder="Month to sell" required="required" />
+        </p>
+        <input type="submit" value="Predict">
+      </form>
+      </p>
+      <div id="result">
+      {{ prediction_text }}
+      </div>
+    </body>
+    </html>
